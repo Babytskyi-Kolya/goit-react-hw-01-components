@@ -1,10 +1,14 @@
-// import statistics from '../data.json';
+import statistics from '../../data.json';
 import user from '../../User.json';
+import transactions from '../../transactions.json';
 import MiUser from '../Profile/User';
-import Mane from '../Stats/Mane';
-import FriendList from '../friends/FriendList';
 import Transaction from '../transaction/transaction-history';
 import { Card } from './App.Styled';
+import Statistic from "../Stats/Statistics";
+import { Wrap, Section, Title } from '../Stats/Statistics.Styled'
+import friends from '../../friends.json';
+import FriendItem from '../friends/FriendItem';
+import { FriendLists } from '../friends/FriendList.Styled';
 
 export const App = () => {
   return (
@@ -18,11 +22,39 @@ export const App = () => {
       views = {user.stats.views}
       likes = {user.stats.likes}
       />
-    <Mane/>
+    <Section className="statistics">
+    <Title className="title">Upload stats</Title>
+        
+    <Wrap className="stat-list">
+    {statistics.map((statistic, index) => (
+    <Statistic 
+    index = {index}
+    key = {statistic.id}
+    label = {statistic.label}
+    percentage = {statistic.percentage}
+    />
+    ))}
+              </Wrap>
+        </Section>
 
-    <FriendList/>
+        <FriendLists className="friend-list">
+        {friends.map(friend => (
+       <FriendItem
+        key = {friend.id}
+        avatar = {friend.avatar}
+        name = {friend.name}
+        isOnline = {friend.isOnline}
+       />
+        ))}
+    </FriendLists>
 
-    <Transaction/>
+    <Transaction
+          key = {transactions.id}
+          type = {transactions.type}
+          amount = {transactions.amount}
+          currency = {transactions.currency}
+         
+    />
     </Card>
   );
 };
